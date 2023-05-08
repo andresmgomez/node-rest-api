@@ -1,0 +1,26 @@
+{
+  "name": "rest-api",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andresmgomez/node-rest-api.git"
+  },
+  "keywords": [
+    "node",
+    "rest",
+    "express",
+    "mongoose",
+    "backend-api"
+  ],
+  "author": "Miguel Gomez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andresmgomez/node-rest-api/issues"
+  },
+  "homepage": "https://github.com/andresmgomez/node-rest-api#readme"
+}
