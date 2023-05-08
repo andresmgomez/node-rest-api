@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/andresmgomez/node-rest-api/issues"
   },
-  "homepage": "https://github.com/andresmgomez/node-rest-api#readme"
+  "homepage": "https://github.com/andresmgomez/node-rest-api#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
