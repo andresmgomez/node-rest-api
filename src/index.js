@@ -9,6 +9,9 @@ const mockRecipes = JSON.parse(
   fs.readFileSync(`${__dirname}/data/recipes.json`)
 );
 
+// Parse json requests in server
+app.use(express.json());
+
 // Display third party content to client
 app.get("/api/v1/recipes", (req, res) => {
   res.status(200).json({

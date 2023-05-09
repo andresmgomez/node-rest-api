@@ -133,5 +133,4 @@ dist
 .pnp.*
 
 # others
-src/controllers
 src/routes
