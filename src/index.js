@@ -1,13 +1,18 @@
 const express = require("express");
+const morgan = require("morgan");
 
-const app = express();
-const port = 5000;
-
+const local = require("./private/secrets");
+const mongodb = require("./db/mongoConfig");
 const recipeRoutes = require("./routes/recipeRoutes");
 
+const app = express();
+
+app.use(morgan("dev"));
 app.use(express.json());
+
 app.use("/api/v1/recipes", recipeRoutes);
 
-app.listen(port, () => {
-  console.log(`Running RESTful API on port: ${port}...`);
+app.listen(local.PORT, () => {
+  console.log(`\nRunning RESTful API on port: ${local.PORT}...`);
+  mongodb.connectToDatabase(local.DATABASE, "recipes");
 });

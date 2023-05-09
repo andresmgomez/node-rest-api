@@ -2,7 +2,7 @@ const Recipe = require("../models/recipeModel");
 
 exports.readRecipes = async (req, res) => {
   try {
-    const allRecipes = await Recipe.find({}).toArray();
+    const allRecipes = await Recipe.find({});
 
     res.status(200).json({
       status: "success",
