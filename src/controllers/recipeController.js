@@ -24,21 +24,16 @@ exports.readQuickRecipe = async (req, res) => {
     }
   } catch (err) {
     res.status(404).json({
-      status: "error",
+      status: "failed",
       message: "Invalid data! Unable to find recipe name",
       error: err.message,
     });
   }
 };
 
-exports.readRecipeContent = async (req, res) => {
-  try {
-  } catch (err) {}
-};
-
 exports.readRecipes = async (req, res) => {
   try {
-    const allRecipes = await Recipe.find({});
+    const allRecipes = await Recipe.find({}).limit(12);
 
     res.status(200).json({
       status: "success",
@@ -56,9 +51,25 @@ exports.readRecipes = async (req, res) => {
   }
 };
 
-exports.readRecipe = async (req, res) => {
+exports.readRecipeContent = async (req, res) => {
   try {
-    const singleRecipe = await Recipe.findById(req.params.id);
+    const singleRecipe = await Recipe.find(
+      {
+        _id: req.params.id,
+      },
+      {
+        picture: 1,
+        name: 1,
+        description: 1,
+        prepTime: 1,
+        cookTime: 1,
+        servings: 1,
+        author: 1,
+        ingredients: 1,
+        instructions: 1,
+        _id: 0,
+      }
+    );
 
     if (singleRecipe) {
       res.status(200).json({

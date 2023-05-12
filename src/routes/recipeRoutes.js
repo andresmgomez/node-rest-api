@@ -10,7 +10,7 @@ router
 
 router
   .route("/:id")
-  .get(recipeController.readRecipe)
+  .get(recipeController.readRecipeContent)
   .patch(recipeController.updateRecipeFields);
 
 router.route("/name/:recipeName").get(recipeController.readQuickRecipe);
