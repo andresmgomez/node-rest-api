@@ -54,7 +54,35 @@ exports.createRecipe = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       status: "failed",
-      message: "Unable to add a new recipe",
+      message: "Invalid data! Unable to add a new recipe",
+      error: [err.message],
+    });
+  }
+};
+
+exports.updateRecipeFields = async (req, res) => {
+  try {
+    const recipeFields = await Recipe.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (recipeFields) {
+      res.status(200).json({
+        status: "success",
+        data: {
+          updatedRecipe: recipeFields,
+        },
+      });
+    }
+  } catch (err) {
+    res.status(404).json({
+      status: "failed",
+      message: "Invalid data! Unable to update recipe",
       error: [err.message],
     });
   }
