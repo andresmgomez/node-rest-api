@@ -1,5 +1,41 @@
 const Recipe = require("../models/recipeModel");
 
+exports.readQuickRecipe = async (req, res) => {
+  try {
+    const quickRecipeInfo = await Recipe.findOne(
+      {
+        name: req.params.recipeName,
+      },
+      {
+        picture: 1,
+        name: 1,
+        author: 1,
+        _id: 0,
+      }
+    );
+
+    if (quickRecipeInfo) {
+      return res.status(200).json({
+        status: "success",
+        data: {
+          quickRecipe: quickRecipeInfo,
+        },
+      });
+    }
+  } catch (err) {
+    res.status(404).json({
+      status: "error",
+      message: "Invalid data! Unable to find recipe name",
+      error: err.message,
+    });
+  }
+};
+
+exports.readRecipeContent = async (req, res) => {
+  try {
+  } catch (err) {}
+};
+
 exports.readRecipes = async (req, res) => {
   try {
     const allRecipes = await Recipe.find({});

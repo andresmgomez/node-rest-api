@@ -14,5 +14,5 @@ app.use("/api/v1/recipes", recipeRoutes);
 
 app.listen(local.PORT, () => {
   console.log(`\nRunning RESTful API on port: ${local.PORT}...`);
-  mongodb.connectToDatabase(local.DATABASE, "recipes");
+  mongodb.connectToDatabase(local.DATABASE, "restaurants");
 });

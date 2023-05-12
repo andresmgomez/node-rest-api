@@ -13,4 +13,6 @@ router
   .get(recipeController.readRecipe)
   .patch(recipeController.updateRecipeFields);
 
+router.route("/name/:recipeName").get(recipeController.readQuickRecipe);
+
 module.exports = router;
