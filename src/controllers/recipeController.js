@@ -100,8 +100,8 @@ exports.createRecipe = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      status: "failed",
-      message: "Invalid data! Unable to add a new recipe",
+      status: "error",
+      message: "Invalid request! Unable to add new recipe",
       error: [err.message],
     });
   }
