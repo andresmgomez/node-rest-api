@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validate = require("mongoose-validator");
+const bcrypt = require("bcryptjs");
 
 const nameValidator = [
   validate({
@@ -48,6 +49,7 @@ const userModel = new mongoose.Schema(
     },
     email: {
       type: String,
+      unique: true,
       lowercase: true,
       trim: true,
       required: [true, "field cannot be empty"],
@@ -62,12 +64,25 @@ const userModel = new mongoose.Schema(
     confirmPassword: {
       type: String,
       trim: true,
-      required: [true, "field cannot be empty"],
-      validate: passwordValidator,
-      select: false,
+      validate: {
+        validator: function (typedPassword) {
+          return typedPassword === this.password;
+        },
+        message: "field is not the same as password",
+      },
     },
   },
   { timestamps: true }
 );
+
+userModel.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    // Encrypt password is user has changed it
+    this.password = await bcrypt.hash(this.password, 12);
+    // Do not store confirm password
+    this.confirmPassword = undefined;
+    next();
+  }
+});
 
 module.exports = mongoose.model("User", userModel);
