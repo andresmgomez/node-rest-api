@@ -1,8 +1,11 @@
+const jwt = require("jsonwebtoken");
+
+const local = require("../private/secrets");
 const User = require("../models/userModel");
 
 exports.createUser = async (req, res) => {
   try {
-    let addUser = await User.create({
+    let newUser = await User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       username: req.body.username,
@@ -10,14 +13,19 @@ exports.createUser = async (req, res) => {
       password: req.body.password,
       confirmPassword: req.body.confirmPassword,
     });
-    const newUser = addUser.save();
 
     if (newUser) {
+      const addUser = await newUser.save();
+      const authToken = jwt.sign({ id: addUser._id }, local.JWT_SECRET_TOKEN, {
+        expiresIn: local.JWT_EXPIRATION_DATE,
+      });
+
       res.status(201).json({
         status: "success",
+        authToken,
         message: "User has been added successfully",
         data: {
-          user: addUser,
+          user: newUser,
         },
       });
     }
@@ -30,12 +38,12 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.findUserIndentities = async (req, res) => {
+const findUserIndentities = async (req, res) => {
   try {
     const userIdentity = await User.find({}, { _id: 1 });
 
     if (userIdentity) {
-      res.status(200).send(userIdentity);
+      return res.status(200).send(userIdentity);
     }
   } catch (err) {
     res.status(500).json({
